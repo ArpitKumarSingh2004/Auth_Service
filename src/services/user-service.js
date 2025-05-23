@@ -51,6 +51,7 @@
 
 // module.exports = new UserService();
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const userRepository = require('../repository/user-repository');
 const { JWT_KEY } = require('../config/serverConfig');
 
@@ -99,6 +100,16 @@ class UserService {
             console.log('Error verifying token:');
             throw error;
         }
+    }
+    checkPassword(userInputPlainPasswords,encryptedPasswords){
+        try {
+            const result = bcrypt.compareSync(userInputPlainPasswords,encryptedPasswords);
+            return result;
+        } catch (error) {
+            console.log('Error verifying password:');
+            throw error;
+        }
+       
     }
 }
 
