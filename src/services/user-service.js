@@ -96,6 +96,22 @@ class UserService {
             throw error;
         }
     }
+    async isAuthenticated(token) {
+        try {
+            const user = await this.verifyToken(token);
+            if (!user) {
+                throw new Error('Invalid token');
+            }
+            const userData = await this.userRepository.getById(user.id);
+            if (!userData) {
+                throw new Error('User not found');
+            }
+            return userData.id;
+        } catch (error) {
+            console.log('Error verifying token:');
+            throw error;
+        }
+    }
         
 
     createToken(user) {
