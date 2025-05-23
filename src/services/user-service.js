@@ -145,6 +145,18 @@ class UserService {
         }
        
     }
+    isAdmin(userId){
+        try {
+            const user = this.userRepository.getById(userId);
+            if (!user) {
+                throw new Error('User not found');
+            }
+            return user.isAdmin;
+        } catch (error) {
+            console.log('Error verifying isAdmin:');
+            throw error;
+        }
+    }
 }
 
 module.exports = UserService; // ✅ Exporting the class, not the instance

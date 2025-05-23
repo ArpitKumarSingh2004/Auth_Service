@@ -27,7 +27,7 @@
 
 
 // src/repository/user-repository.js
-const { User } = require('../models/index');
+const { User, Role } = require('../models/index');
 
 class UserRepository {
   async create(data) {
@@ -71,6 +71,24 @@ class UserRepository {
     }
   }
 
+  async isAdmin(userId) {
+    try{
+      const user=await User.findOne({
+        where:{id:userId},
+        include:[{
+          model:Role,
+          attributes:['name'],
+          where:{
+            name:'admin'
+          }
+        }]
+      });
+    }
+    catch(error){
+      console.log('Error checking if user is admin:');
+      throw error;
+    }
+  }
 }
 
 module.exports = UserRepository; // ✅ Export the class
