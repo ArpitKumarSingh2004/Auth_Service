@@ -28,8 +28,29 @@ const create = async (req, res) => {
              });
     }
 }
+const signIn = async (req, res) => {
+    try {
+        
+        const token = await userService.signIn(req.body.email, req.body.password);
+        return res.status(200).json({
+            message: 'User signed in successfully',
+            data: token,
+            success: true,
+            err:{}
+        });
+    } catch (error) {
+        console.log('Error signing in:', error);
+        return res.status(500).json({
+             message: 'Error signing in',
+             data:{},
+             success: false, 
+             err:error
+             });
+    }
+}
 
 
 module.exports = {
-    create
+    create,
+    signIn
 };

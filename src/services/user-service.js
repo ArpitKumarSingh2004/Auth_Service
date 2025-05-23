@@ -79,6 +79,24 @@ class UserService {
             throw error;
         }
     }
+    async signIn(email,plainPassword){
+        try {
+            const user = await this.userRepository.getByEmail(email);
+            if (!user) {
+                throw new Error('User not found');
+            }
+            const isPasswordValid = this.checkPassword(plainPassword, user.password);
+            if (!isPasswordValid) {
+                throw new Error('Invalid password');
+            }
+            const newJWT = this.createToken({email:user.email,id:user.id});
+            return newJWT;
+        } catch (error) {
+            console.log('Error signing in:');
+            throw error;
+        }
+    }
+        
 
     createToken(user) {
         try {
