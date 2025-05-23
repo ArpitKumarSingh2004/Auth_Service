@@ -51,6 +51,6 @@ const signIn = async (req, res) => {
 
 
 module.exports = {
-    create,
+    create,   
     signIn
 };
