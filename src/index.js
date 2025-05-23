@@ -4,6 +4,8 @@ const{PORT} = require('./config/serverConfig');
 
 const apiRoutes = require('./routes/index');
 
+const UserService = require('./services/user-service');
+
 // const {User} = require('./models/index');
 // const bcrypt = require('bcrypt');
 
@@ -21,12 +23,9 @@ app.use('/api',apiRoutes);
 
 app.listen(PORT,async() => {
     console.log(`Server Started on port ${PORT}`);
-    // const repo = new UserRepository();
-    // const response = await repo.getById(1);
-    // console.log('User:', response);
-    // const incomingpassword = '123456';
-    // const user=await User.findByPk(1);
-    // const response = bcrypt.compareSync(incomingpassword, user.password);
+    const service = new UserService();
+    // const newToken = service.createToken({email:'arpit@admin.com',id:1});
+    
 });
 }
 
